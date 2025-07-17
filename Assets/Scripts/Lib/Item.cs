@@ -7,7 +7,7 @@ namespace Lib
     public sealed class Item : ScriptableObject, IComparable<Item>
     {
         public uint id;
-        public ESelectionType type;
+        public EDataType type;
         public EQualityType quality;
         public Sprite icon; // 图标资源 (* icon:string  (图标资源)
         public uint amount; // 本格数量
@@ -34,7 +34,7 @@ namespace Lib
         }
     }
 
-    public enum ESelectionType
+    public enum EDataType
     {
         [InspectorName("道具")] Props = 1,
         [InspectorName("材料")] Materials = 2,

@@ -21,6 +21,7 @@ namespace Controller
 
         private void OnClick()
         {
+            panel.SetActive(false);
             Debug.Log($"Close button clicked: {panel}");
         }
     }

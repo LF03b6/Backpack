@@ -34,7 +34,14 @@ namespace Lib
             ls.totalCount = totalCount;
             ls.RefillCells();
 
-            GameManager.instance.backpackManager.SetOnItemCountChanged(SetItemsCount);
+            // todo : 这里要添加默认初始化固定个数的slot
+            // GameManager.instance.backpack.SetOnItemCountChanged(SetItemsCount);
+            // private void SetItemsCount(int count)
+            // {
+            //     totalCount = count > GameConfig.Backpack.SlotsCountStandard
+            //         ? (count / GameConfig.Backpack.SlotsPerRow + 1) * GameConfig.Backpack.SlotsPerRow
+            //         : GameConfig.Backpack.SlotsCountStandard;
+            // }
         }
 
         public GameObject GetObject(int index)
@@ -55,13 +62,6 @@ namespace Lib
         public void ProvideData(Transform trans, int idx)
         {
             trans.SendMessage("ScrollCellIndex", idx);
-        }
-
-        private void SetItemsCount(int count)
-        {
-            totalCount = count > GameConfig.Backpack.SlotsCountStandard
-                ? (count / GameConfig.Backpack.SlotsPerRow + 1) * GameConfig.Backpack.SlotsPerRow
-                : GameConfig.Backpack.SlotsCountStandard;
         }
     }
 }

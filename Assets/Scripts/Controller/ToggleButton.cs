@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 namespace Controller
 {
-    public sealed class SelectionToggle : MonoBehaviour
+    public sealed class ToggleButton : MonoBehaviour
     {
         [SerializeField] private Toggle thisToggle;
-        [SerializeField] private ESelectionType thisType;
+        [SerializeField] private EDataType thisType;
 
         public Toggle toggle => thisToggle;
-        public ESelectionType type => thisType;
+        public EDataType type => thisType;
     }
 }

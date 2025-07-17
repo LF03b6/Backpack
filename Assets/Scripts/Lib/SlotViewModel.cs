@@ -1,4 +1,4 @@
-namespace Controller
+namespace Lib
 {
     public class SlotViewModel
     {

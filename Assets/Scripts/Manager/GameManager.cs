@@ -1,13 +1,14 @@
-using System;
-using Model;
+using Controller;
 using UnityEngine;
+using Utils;
 
 namespace Manager
 {
     public sealed class GameManager : MonoBehaviour
     {
         public static GameManager instance { get; private set; }
-        public BackpackManager backpackManager { get; private set; }
+        public Backpack backpack { get; private set; }
+        public EventDispatcher eventDispatcher { get; private set; }
 
         private void Awake()
         {
@@ -25,7 +26,8 @@ namespace Manager
 
         private void RegisterManager()
         {
-            backpackManager = new BackpackManager();
+            backpack = new Backpack();
+            eventDispatcher = new EventDispatcher();
         }
     }
 }
