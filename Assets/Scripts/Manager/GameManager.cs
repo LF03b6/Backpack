@@ -1,13 +1,12 @@
-using Controller;
+using Core.EventBus;
 using UnityEngine;
-using Utils;
 
 namespace Manager
 {
     public sealed class GameManager : MonoBehaviour
     {
         public static GameManager instance { get; private set; }
-        public Backpack backpack { get; private set; }
+        public Backpack.Controller.BackpackController backpackController { get; private set; }
         public EventDispatcher eventDispatcher { get; private set; }
 
         private void Awake()
@@ -26,7 +25,7 @@ namespace Manager
 
         private void RegisterManager()
         {
-            backpack = new Backpack();
+            backpackController = new Backpack.Controller.BackpackController();
             eventDispatcher = new EventDispatcher();
         }
     }
