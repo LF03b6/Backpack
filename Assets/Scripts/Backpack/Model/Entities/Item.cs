@@ -1,18 +1,34 @@
 using System;
 using Backpack.Definitions;
-using Definitions;
 using UnityEngine;
 
 namespace Backpack.Model.Entities
 {
-    [CreateAssetMenu(menuName = "Lib/Item", fileName = "New Item")]
-    public sealed class Item : ScriptableObject, IComparable<Item>
+    public sealed class Item : IComparable<Item>
     {
-        public uint id;
-        public DataType type;
-        public QualityType quality;
-        public Sprite icon; // 图标资源 (* icon:string  (图标资源)
-        public uint amount; // 本格数量
+        public uint id { get; }
+        public DataType type { get; }
+        public QualityType quality { get; }
+        public Sprite icon { get; } // 图标资源 (* icon:string  (图标资源)
+        public int amount { get; private set; } // 本格数量
+
+        public Item(uint id, DataType type, QualityType quality, Sprite icon, int amount)
+        {
+            this.id = id;
+            this.type = type;
+            this.quality = quality;
+            this.icon = icon;
+            this.amount = amount;
+        }
+
+        public Item(global::Model.Entities.Item item)
+        {
+            id = item.id;
+            type = item.type;
+            quality = item.quality;
+            icon = item.icon;
+            amount = 1;
+        }
 
         public int CompareTo(Item other)
         {
@@ -33,6 +49,18 @@ namespace Backpack.Model.Entities
 
             // amount从大到小
             return amount.CompareTo(other.amount);
+        }
+
+        public void ReAmount(int increment)
+        {
+            var t = amount + increment;
+            if (t <= 0)
+            {
+                t = 0;
+                // todo : resize
+            }
+
+            amount = t;
         }
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Backpack.Definitions
 {
+    [Serializable]
     public enum DataType
     {
         [InspectorName("道具")] Props = 1,

@@ -4,7 +4,6 @@ using Backpack.Definitions;
 using Backpack.Model.Entities;
 using Backpack.Model.Sources;
 using Backpack.Model.Sources.Interfaces;
-using Manager;
 
 namespace Backpack.Controller
 {
@@ -32,9 +31,7 @@ namespace Backpack.Controller
 
         public bool isEmpty => _currentList == null || _currentList.Count == 0;
 
-        public void Add(DataType type, Item item) => GetSourceByType(type).Add(item);
-
-        public void AddCurrent(Item item) => _currentList.Add(item);
+        public void Add(Item item) => GetSourceByType(item.type).Add(item);
 
         public bool Remove(DataType type, int index) => GetSourceByType(type).Remove(index);
 
@@ -44,9 +41,7 @@ namespace Backpack.Controller
 
         public Item GetCurrent(int index) => _currentList.Get(index);
 
-        public bool Set(DataType type, int index, Item item) => GetSourceByType(type).Set(index, item);
-
-        public bool SetCurrent(int index, Item item) => _currentList.Set(index, item);
+        public bool Set(int index, Item item) => GetSourceByType(item.type).Set(index, item);
 
         private IDataSources<Item> GetSourceByType(DataType type) => type switch
         {

@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Backpack.Definitions
 {
+    [Serializable]
     public enum QualityType
     {
         [InspectorName("品质Ⅰ")] Quality1 = 1,
