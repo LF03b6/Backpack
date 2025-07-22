@@ -35,8 +35,7 @@ namespace Test.Backpack.Controller
                 var dataType = (DataType)int.Parse(type.text);
                 var increment = int.Parse(amount.text);
                 var i = _items.First(item => item.id == idv && item.type == dataType);
-                var newItem = new global::Backpack.Model.Entities.Item(i);
-                newItem.ReAmount(increment);
+                var newItem = new global::Backpack.Model.Entities.Item(i.id, i.type, i.quality, i.icon, increment);
                 _controller.Add(newItem);
 
                 Debug.Log("Added " + newItem.id + " to " + newItem.type);

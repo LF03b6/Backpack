@@ -50,5 +50,7 @@ namespace Backpack.Controller
             DataType.Fragment => _fragment,
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        // todo : 缺乏总线控制和反馈
     }
 }

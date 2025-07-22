@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Backpack.Constants;
 using Backpack.Model.Entities;
 using Backpack.Model.Sources.Interfaces;
+using UnityEngine;
 
 namespace Backpack.Model.Sources
 {
@@ -45,8 +49,49 @@ namespace Backpack.Model.Sources
 
         public void Add(Item item)
         {
-            _items.Add(item);
+            if (item is not { amount: > 0 }) return;
+
+            var remaining = item.amount;
+
+            // 查找所有可叠加的 item（未满格的）
+            var matches = _items
+                .Where(i => i.id == item.id && i.type == item.type && i.amount < BackpackConstants.SlotMaxAmount)
+                .ToList();
+
+            foreach (var result in matches.Select(existing => existing.ReAmount(remaining)))
+            {
+                if (result == null)
+                {
+                    // 完全叠加成功，无剩余
+                    remaining = 0;
+                    break;
+                }
+
+                if (result <= 0)
+                {
+                    // 不太可能出现 <= 0 的情况，但为了健壮性处理一下
+                    remaining = 0;
+                    break;
+                }
+
+                remaining = result.Value;
+            }
+
+            // 如果还有剩余，说明需要开新容器（可能多个）
+            while (remaining > 0)
+            {
+                var addAmount = Math.Min(remaining, BackpackConstants.SlotMaxAmount);
+                _items.Add(new Item(
+                    item.id,
+                    item.type,
+                    item.quality,
+                    item.icon,
+                    addAmount
+                ));
+                remaining -= addAmount;
+            }
         }
+
 
         public void Clear()
         {

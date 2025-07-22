@@ -21,15 +21,6 @@ namespace Backpack.Model.Entities
             this.amount = amount;
         }
 
-        public Item(global::Model.Entities.Item item)
-        {
-            id = item.id;
-            type = item.type;
-            quality = item.quality;
-            icon = item.icon;
-            amount = 1;
-        }
-
         public int CompareTo(Item other)
         {
             // 如果 other 是 null，则当前对象大于 null 对象
@@ -51,16 +42,28 @@ namespace Backpack.Model.Entities
             return amount.CompareTo(other.amount);
         }
 
-        public void ReAmount(int increment)
+        /// <summary>
+        /// 重新设置容量
+        /// 容量取值范围 [1, 99]
+        /// </summary>
+        /// <param name="increment">增量</param>
+        /// <returns>余长度 如果没那则证明落在范围内 否则&lt;=0是亏空 &gt;是余量 </returns>
+        public int? ReAmount(int increment)
         {
             var t = amount + increment;
-            if (t <= 0)
+            switch (t)
             {
-                t = 0;
-                // todo : resize
+                case >= 1 and <= 99:
+                    amount = t;
+                    return null;
+                case <= 0:
+                    amount = 0;
+                    return t;
+                case > 99:
+                    var rt = t - 99;
+                    amount = 99;
+                    return rt;
             }
-
-            amount = t;
         }
     }
 }

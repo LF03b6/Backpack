@@ -2,6 +2,7 @@ namespace Backpack.Constants
 {
     public static class BackpackConstants
     {
+        public const int SlotMaxAmount = 99;
         public const int SlotsPerRow = 10;
         public const int SlotsPerColumn = 7;
 

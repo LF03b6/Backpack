@@ -10,7 +10,6 @@ namespace Manager
         public static GameManager instance { get; private set; }
         public Backpack.Controller.BackpackController backpackController { get; private set; }
         public EventDispatcher eventDispatcher { get; private set; }
-        private const string Path = "Items";
         public Model.Entities.Item[] resourceItems { get; private set; }
 
         private void Awake()
@@ -24,16 +23,12 @@ namespace Manager
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            RegisterManager();
+            Init();
         }
 
-        private void Start()
+        private void Init()
         {
-            resourceItems = Resources.LoadAll<Model.Entities.Item>(Path);
-        }
-
-        private void RegisterManager()
-        {
+            resourceItems = Resources.LoadAll<Model.Entities.Item>("Items");
             backpackController = new Backpack.Controller.BackpackController();
             eventDispatcher = new EventDispatcher();
         }

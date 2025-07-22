@@ -39,7 +39,9 @@ namespace Test.Backpack.Controller
                 for (var i = 0; i < val; i++)
                 {
                     var idx = UnityEngine.Random.Range(0, _items.Length);
-                    _controller.Add(new global::Backpack.Model.Entities.Item(_items[idx]));
+                    var item = _items[idx];
+                    _controller.Add(
+                        new global::Backpack.Model.Entities.Item(item.id, item.type, item.quality, item.icon, 1));
                 }
 
                 Debug.Log($"Has Added {val} items by random");
