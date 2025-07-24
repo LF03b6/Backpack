@@ -1,29 +1,32 @@
-using System;
 using Backpack.Constants;
 using Backpack.Definitions;
+using Backpack.Model.Entities;
 using Manager;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Backpack.View
 {
-    public class ItemCell : MonoBehaviour
+    public class ItemCell : MonoBehaviour//, IPointerEnterHandler
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI amount;
         [SerializeField] private TextMeshProUGUI quality;
-        private int _currentIndex = -1;
+        private Item _item;
+
+        // private int _currentIndex = -1;
         private Controller.BackpackController _backpackController;
 
-        private void OnEnable()
+        private void Awake()
         {
             _backpackController = GameManager.instance.backpackController;
         }
 
         private void OnDisable()
         {
-            _currentIndex = -1;
+            // _currentIndex = -1;
             icon.enabled = false;
             amount.text = null;
             quality.text = null;
@@ -32,17 +35,26 @@ namespace Backpack.View
         void ScrollCellIndex(int idx)
         {
             // 不变更或者空model
-            if (_currentIndex == idx || _backpackController.isEmpty) return;
+            // if (_currentIndex == idx ) return;
+            if (_backpackController.isEmpty) return;
 
             // 越界 防止访问跃出model
-            if (idx >= _backpackController.dataSourceCount) return;
+            if (idx >= _backpackController.dataSourceCount)
+            {
+                icon.enabled = false;
+                amount.text = null;
+                quality.text = null;
+                _item = null;
+                return;
+            }
 
             // 正常对应 重设引索
-            _currentIndex = idx;
+            // _currentIndex = idx;
             icon.enabled = true;
-            
+
             // 获取item
             var item = _backpackController.GetCurrent(idx);
+            _item = item;
             icon.sprite = item.icon;
             SetDescription(item.amount, item.quality);
         }
@@ -75,5 +87,11 @@ namespace Backpack.View
                     break;
             }
         }
+
+        // public void OnPointerEnter(PointerEventData eventData)
+        // {
+        //     if (_item == null) return;
+        //     Debug.Log($"OnPointerEnter-> ID: {_item.id} Count: {_item.amount}");
+        // }
     }
 }

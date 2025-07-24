@@ -1,5 +1,6 @@
 using System;
 using Core.ObjectPool;
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,8 @@ namespace Backpack.Provider
     public class SlotsPoolProvider : MonoBehaviour, LoopScrollPrefabSource, LoopScrollDataSource
     {
         public GameObject item;
-        public int totalCount = -1;
-
+        public int defaultUiCount = -1;
+        [SerializeField] private LoopScrollRect loopScrollRect;
         private ObjectPool<Transform> _slotsPool;
 
         private void Awake()
@@ -26,20 +27,18 @@ namespace Backpack.Provider
 
         private void Start()
         {
-            var ls = GetComponent<LoopScrollRect>();
-            ls.prefabSource = this;
-            ls.dataSource = this;
-            ls.totalCount = totalCount;
-            ls.RefillCells();
+            loopScrollRect ??= GetComponent<LoopScrollRect>();
+            loopScrollRect.prefabSource = this;
+            loopScrollRect.dataSource = this;
+            loopScrollRect.totalCount = ProvideItemCount(defaultUiCount);
+            loopScrollRect.RefillCells();
+        }
 
-            // todo : 这里要添加默认初始化固定个数的slot
-            // GameManager.instance.backpack.SetOnItemCountChanged(SetItemsCount);
-            // private void SetItemsCount(int count)
-            // {
-            //     totalCount = count > GameConfig.Backpack.SlotsCountStandard
-            //         ? (count / GameConfig.Backpack.SlotsPerRow + 1) * GameConfig.Backpack.SlotsPerRow
-            //         : GameConfig.Backpack.SlotsCountStandard;
-            // }
+        public void ReSizeUI()
+        {
+            var count = GameManager.instance.backpackController.dataSourceCount;
+            loopScrollRect.totalCount = ProvideItemCount(count);
+            loopScrollRect.RefreshCells();
         }
 
         public GameObject GetObject(int index)
@@ -60,6 +59,16 @@ namespace Backpack.Provider
         public void ProvideData(Transform trans, int idx)
         {
             trans.SendMessage("ScrollCellIndex", idx);
+        }
+
+        private static int ProvideItemCount(int countNow)
+        {
+            const int standardMax = Constants.BackpackConstants.SlotsCountStandard;
+            const int standardRow = Constants.BackpackConstants.SlotsPerRow;
+
+            return countNow > standardMax
+                ? (countNow / standardRow + 1) * standardRow
+                : standardMax;
         }
     }
 }

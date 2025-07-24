@@ -24,8 +24,8 @@ namespace Backpack.View
                 thisToggle.onValueChanged.AddListener(isOn => SetType(isOn, thisType));
 
                 // 初始触发逻辑
-                if (thisToggle.isOn)
-                    SetType(true, thisType);
+                // if (thisToggle.isOn)
+                //     SetType(true, thisType);
             }
         }
 

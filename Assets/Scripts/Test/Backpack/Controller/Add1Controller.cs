@@ -42,7 +42,7 @@ namespace Test.Backpack.Controller
             }
             catch (Exception e)
             {
-                Debug.Log("Error" + e.Message);
+                GameManager.instance.ShowError(e);
             }
         }
     }

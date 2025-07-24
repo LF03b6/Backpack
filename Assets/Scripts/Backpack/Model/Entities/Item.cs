@@ -28,7 +28,7 @@ namespace Backpack.Model.Entities
 
             // 品质从高到低
             var qualityComparison = quality.CompareTo(other.quality);
-            if (qualityComparison != 0) return qualityComparison;
+            if (qualityComparison != 0) return -qualityComparison;
 
             // 类型从小到大
             var typeComparison = type.CompareTo(other.type);

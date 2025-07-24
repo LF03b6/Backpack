@@ -23,12 +23,14 @@ namespace Backpack.Model.Sources
         public bool Remove(int index)
         {
             _items.RemoveAt(index);
+            _items.Sort();
             return true;
         }
 
         public void Insert(int index, Item item)
         {
             _items.Insert(index, item);
+            _items.Sort();
         }
 
         public bool Set(int index, Item item)
@@ -90,8 +92,9 @@ namespace Backpack.Model.Sources
                 ));
                 remaining -= addAmount;
             }
+            
+            _items.Sort();
         }
-
 
         public void Clear()
         {
@@ -111,6 +114,7 @@ namespace Backpack.Model.Sources
         public bool Remove(Item item)
         {
             var res = _items.Remove(item);
+            _items.Sort();
             return res;
         }
     }
