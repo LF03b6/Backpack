@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Backpack.View
 {
-    public class ItemCell : MonoBehaviour//, IPointerEnterHandler
+    public class ItemCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI amount;
@@ -36,10 +36,8 @@ namespace Backpack.View
         {
             // 不变更或者空model
             // if (_currentIndex == idx ) return;
-            if (_backpackController.isEmpty) return;
-
             // 越界 防止访问跃出model
-            if (idx >= _backpackController.dataSourceCount)
+            if (_backpackController.isEmpty || idx >= _backpackController.dataSourceCount)
             {
                 icon.enabled = false;
                 amount.text = null;
@@ -88,10 +86,15 @@ namespace Backpack.View
             }
         }
 
-        // public void OnPointerEnter(PointerEventData eventData)
-        // {
-        //     if (_item == null) return;
-        //     Debug.Log($"OnPointerEnter-> ID: {_item.id} Count: {_item.amount}");
-        // }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (_item == null) return;
+            ItemDescription.instance.Show(_item); // 展示信息
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            ItemDescription.instance.Hide();
+        }
     }
 }

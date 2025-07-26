@@ -5,6 +5,7 @@ using Backpack.Model.Entities;
 using Backpack.Model.Sources;
 using Backpack.Model.Sources.Interfaces;
 using Backpack.Provider;
+using Manager;
 using UnityEngine;
 
 namespace Backpack.Controller

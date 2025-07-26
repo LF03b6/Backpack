@@ -16,6 +16,7 @@ namespace Manager
         [SerializeField] private GameObject errorPanel;
         [SerializeField] private GameObject canvas;
         [SerializeField] private SlotsPoolProvider provider;
+        [SerializeField] private GameObject itemDescriptionPanel;
 
         private void Awake()
         {
@@ -36,6 +37,7 @@ namespace Manager
             resourceItems = Resources.LoadAll<Model.Entities.Item>("Items");
             backpackController = new Backpack.Controller.BackpackController(provider);
             eventDispatcher = new EventDispatcher();
+            Instantiate(itemDescriptionPanel, canvas.transform);
         }
 
         public void ShowError(Exception e)

@@ -39,7 +39,7 @@ namespace Backpack.Model.Entities
             if (idComparison != 0) return idComparison;
 
             // amount从大到小
-            return amount.CompareTo(other.amount);
+            return -amount.CompareTo(other.amount);
         }
 
         /// <summary>
